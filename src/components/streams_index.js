@@ -17,7 +17,9 @@ import { getTopGames,
         channelListMount,
         switchChannelList,
         gamesMenuMount,
-        isLoading
+        isLoading,
+        getBookmarks,
+        showBookmarks
     } from '../actions/index';
 
 
@@ -34,12 +36,35 @@ class StreamIndex extends Component {
     }
 
     componentWillMount() {
+
+    if (!localStorage.gameStreams) {
+        const gameStreams = [];
+        const TV = {
+            settings: {},
+            bookmarks: []
+        }
+        gameStreams.push(TV);
+        const gameStreamsString = JSON.stringify(gameStreams);
+        localStorage.setItem('gameStreams', gameStreamsString);
+
+        this.props.getBookmarks(gameStreams); // not defined yet.
+    } else {
+        let storage = localStorage.getItem('gameStreams');
+        let gameStreams = JSON.parse(storage);
+        const { settings } = gameStreams[0]; // might not need at all.
+
+        this.props.getBookmarks(gameStreams);
+     }
+
     document.addEventListener('keydown', this.handleKey, false);
     this.props.isLoading(true);
     this.props.getTopGames(false);
     this.props.getTopStreams(true);
     this.props.channelListMount(false);
-    this.props.gamesMenuMount(true);    
+    this.props.gamesMenuMount(true);
+    this.props.showBookmarks(false); 
+    
+
     }
 
     handleKey(e) {
@@ -57,13 +82,16 @@ class StreamIndex extends Component {
        if(e.keyCode == 13) {
            this.handleGamesMenu(!this.props.isGamesMounted)
        }
+        if (e.keyCode == 38) {
+            this.addBookmark();
+        }
     }
     changeStream(keyCode) {
         if(keyCode == 33) {
             this.playNextStream();
         } else if (keyCode == 34) {
             this.playPreviousStream();
-        }
+        } 
         return;
     }
     // Currently uses default stream list.
@@ -84,6 +112,68 @@ class StreamIndex extends Component {
     handleGamesMenu(boo) {
         this.props.gamesMenuMount(boo, true);
     }
+    findIndexOfObject(object, userName) {
+ 
+        for(let i = 0; i < object.length; i++) {
+            if(object[i].user_name == userName) {
+
+                return i;
+            }
+        }
+
+        return -1;
+    }
+    clone(object) {
+        if (object == null || "object" !== typeof object) return object;
+        let copy = object.constructor();
+        for(var attr in object) {
+            if(object.hasOwnProperty(attr)) copy[attr] = object[attr];
+        }
+        return copy 
+    }
+
+    addBookmark() {
+        const storage = localStorage.getItem('gameStreams');
+        const gameStreams = JSON.parse(storage);
+    
+
+        const bookmarks = gameStreams[0].bookmarks;
+        if(this.props.currentlyPlaying) {
+            let index = this.findIndexOfObject(bookmarks, this.props.currentlyPlaying.user_name);
+            if(index === -1) {
+                let clonedBookmark = this.clone(this.props.currentlyPlaying);
+                const dateAdded = new Date();
+                clonedBookmark.title = `Bookmark added on:  ${dateAdded.getDate()} / ${dateAdded.getMonth()} / ${dateAdded.getFullYear()}`;
+                clonedBookmark.viewer_count = "N/A";
+                bookmarks.unshift(clonedBookmark);
+            } else {
+                bookmarks.splice(index, 1);
+            }   
+            /*if(this.props.showToastObj.display) {
+                this.props.showToast({index: 0, name: '', display: false});
+            }
+                this.props.showToast({index:index, name: this.props.activeChannel.display_name, display: true});*/
+          //  WebOSToast(index, this.props.activeChannel.display_name);
+        }/* else {
+            let index = this.findIndexOfObject(bookmarks, this.props.topStreams[0].channel.name);
+            if(index === -1) {
+                bookmarks.unshift({...this.props.topStreams[0].channel, ...{preview: this.props.topStreams[0].preview.medium}});
+            } else {
+                bookmarks.splice(index, 1);
+            }
+            if(this.props.showToastObj.display) {
+                this.props.showToast({index: 0, name: '', display: false});
+            }
+            this.props.showToast({index:index, name:this.props.topStreams[0].channel.display_name, display: true});
+          //  WebOSToast(index, this.props.topStreams[0].channel.display_name);
+        }*/
+
+        let newBookmark = JSON.stringify(gameStreams);
+        console.log(newBookmark);
+        localStorage.setItem('gameStreams', newBookmark);
+        
+        this.props.getBookmarks(JSON.parse(newBookmark));
+    }
     render() {
 
 
@@ -99,8 +189,8 @@ class StreamIndex extends Component {
         </div>);
     }
 }
-function mapStateToProps({ topGames, topStreams, byNameResult, byIdResult, currentlyPlaying, isChannelListMounted, isGamesMounted, currentListName, currentChannelList, loading }) {
-    return { topGames, topStreams, byNameResult, byIdResult, currentlyPlaying, isChannelListMounted, isGamesMounted, currentListName, currentChannelList, loading };
+function mapStateToProps({ topGames, topStreams, byNameResult, byIdResult, currentlyPlaying, isChannelListMounted, isGamesMounted, currentListName, currentChannelList, loading, renderBookmarks }) {
+    return { topGames, topStreams, byNameResult, byIdResult, currentlyPlaying, isChannelListMounted, isGamesMounted, currentListName, currentChannelList, loading, renderBookmarks };
 }
 
-export default connect(mapStateToProps, { getTopGames, getTopStreams, findGameByName, findGameByID, playNext, playPrevious, channelListMount, gamesMenuMount, switchChannelList, isLoading  })(StreamIndex);
+export default connect(mapStateToProps, { getTopGames, getTopStreams, findGameByName, findGameByID, playNext, playPrevious, channelListMount, gamesMenuMount, switchChannelList, isLoading, getBookmarks, showBookmarks})(StreamIndex);

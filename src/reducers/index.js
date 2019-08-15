@@ -9,7 +9,10 @@ import isChannelListMountedReducer from './channel_list_mount_reducer';
 import channelIndexReducer from './channel_index_reducer';
 import gamesMountedReducer from './games_mounted_reducer';
 import currentChannelsReducer from './current_channels_reducer';
-import currentListNameRecuder from './current_list_name_recuder'
+import currentListNameRecuder from './current_list_name_recuder';
+import previousListNameRecuder from './previous_list_name_recuder';
+import bookmarkReducer from './bookmark_reducer';
+import showBookmarkReducer from './show_bookmark_reducer';
 
 import loaderReducer from './loader_reducer';
 
@@ -25,7 +28,10 @@ const rootReducer = combineReducers({
     isGamesMounted: gamesMountedReducer,
     currentChannelList: currentChannelsReducer,
     currentListName: currentListNameRecuder,
-    loading: loaderReducer
+    previousListName: previousListNameRecuder,
+    loading: loaderReducer,
+    bookmarks: bookmarkReducer,
+    renderBookmarks: showBookmarkReducer
 });
 
 export default rootReducer;

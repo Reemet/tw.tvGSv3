@@ -172,7 +172,15 @@ body {
     
   }
 }
-
+.no-streams-placeholder {
+  position: absolute;
+  top: 27%;
+  font-size: 30px;
+  text-align: center;
+  text-shadow: 1px -1px 0 #000;
+  font-weight: bolder;
+  color: white;
+}
 .channel-type-switch{
 
   position: fixed;
@@ -192,12 +200,13 @@ body {
   left: 9px;
   height: 33px;
 }
-.list-icon {
+.list-icon{
   position: fixed;
-  bottom: 128px;
-  left: 30px;
+  bottom: 111px;
+  left: 12px;
   height: 28px;
 }
+
 .clock {
   position: absolute;
     top: 65px;

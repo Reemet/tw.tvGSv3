@@ -15,8 +15,11 @@ const IS_GAMES_MOUNTED = 'IS_GAMES_MOUNTED';
 const IS_CHANNEL_LIST_MOUNTED = 'IS_CHANNEL_LIST_MOUNTED';
 const CURRENT_CHANNEL_LIST = 'CURRENT_CHANNEL_LIST';
 const CURRENT_CHANNEL_LIST_NAME = 'CURRENT_CHANNEL_LIST_NAME';
+const PREVIOUS_LIST_NAME = 'PREVIOUS_LIST_NAME';
 const SAVE_INDEX = 'SAVE_INDEX';
 
+const GET_BOOKMARKS = 'GET_BOOKMARKS';
+const SHOW_BOOKMARKS = 'SHOW_BOOKMARKS';
 
 const servers = [];
 const helix = axios.create({
@@ -234,6 +237,42 @@ export function isLoading(boolean) {
     return {
         type: LOADING,
         payload: boolean
+    }
+}
+export function getBookmarks(storage) {
+    return {
+        type: GET_BOOKMARKS,
+        payload: storage[0].bookmarks
+    }
+}
+export function showBookmarks(boolean, previous = '') {
+    return dispatch => {
+        if(boolean) {
+            dispatch({
+                type: PREVIOUS_LIST_NAME,
+                payload: previous
+            });
+            dispatch({
+                type: CURRENT_CHANNEL_LIST_NAME,
+                payload: 'BOOKMARKS'
+            });
+        } else {
+            dispatch({
+                type: CURRENT_CHANNEL_LIST_NAME,
+                payload: previous
+            });
+        }
+        
+        dispatch({
+            type: SHOW_BOOKMARKS,
+            payload: boolean
+        })
+    }
+}
+export function previousListName(name) {
+    return {
+        type: PREVIOUS_LIST_NAME,
+        payload: name
     }
 }
 
