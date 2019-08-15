@@ -1,0 +1,356 @@
+$color-primary: #a72efd;
+$color: #343636;
+$top: url('/top.png');
+
+@font-face {
+  font-family: "impact";
+  src: url("/impact.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  position: 'fixed'
+}
+@keyframes dropOne {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+    bottom: -50px;
+  }
+  80% {
+    opacity: 0;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes dropTwo {
+  0% {
+    opacity: 1;
+ 
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+    bottom: -50px;
+
+  }
+  80% {
+    opacity: 0;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+body {
+  color: $color;
+  overflow: hidden;
+  font-family: impact , 'sans-serif';
+  background-color: white;
+  -webkit-font-smoothing: antialiased;
+  font-size: 20px;
+}
+#overlay {
+  position: absolute; 
+  top: 0px; 
+  left: 0px;
+  bottom: 0px; 
+  right: 0px; 
+  z-index: 49; 
+  background-color: #93935100;
+}
+.iframe-wrapper {
+  position: relative;
+  border: none;
+  height: 100%;
+  width: 100%
+}
+.channel-menu {
+  position: absolute;
+  width: 200px;
+  bottom: 55px;
+  margin-left: 80px;
+  z-index: 1;
+  .channel-description {
+    position: absolute;
+    left: 280px;
+    bottom: -18px;
+    text-align: center;
+    width: 747px;
+    height: 172px;
+    background: linear-gradient(45deg, #000000, rgba(68, 37, 107, 0.45));
+    background-color: #dadada6b;
+    border-bottom-right-radius: 6px;
+    border-top-right-radius: 29px;
+    .description-text-wrap {
+      padding-left: 0px;
+      padding-right: 82px;
+      padding-top: 10px;
+      overflow: hidden;
+      .description-text {
+        font-size: 25px;
+        height: 95px;
+        color: #f7f4f2;
+        margin-top: 30px;
+        letter-spacing: 1px;
+        padding-right: 123px; 
+        margin-left: 87px;
+      }
+    }
+    
+  .user-live-status {
+    position: absolute;
+    display: inline-block;
+    left: 4px;
+    height: 70px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 9px;
+    top: -18px;
+  }
+  .viewer-count {
+    display: inline-block;
+    position: absolute;
+    margin-right: 2px;
+    left: 74px;
+    letter-spacing: 3px;
+    top: -5px;
+    width: 460px;
+    text-align: left;
+    padding-left: 13px;
+    padding-bottom: 4px;
+    color: white;
+    padding-right: 2px;
+    padding-top: 5px;
+    border-width: 10px;
+    border-bottom-style: double;
+    border-color: #8f00b3;
+  }
+}
+  .channel-list {
+    position:absolute;
+    .channel-menu-item {
+      padding: 1.7px;
+      position: absolute;
+      height: 125px;
+      width: 240px;
+      background-size: cover;
+      opacity: 0.8;
+      text-align: center;
+      border-top: 2px solid white;
+      border-right: 2px solid white;
+      border-left: 2px solid white;
+      &.active {
+        opacity: 1;
+        z-index: 2;
+        border: 3px solid $color-primary;
+        transform: scale(1.3);
+        box-shadow: rgb(0, 0, 0) 5px 5px 30px 0;
+      }
+      .channel-title {
+        color: white;
+        font-weight: bold;
+        margin-top: 2px;
+        letter-spacing: 0.05em;
+        overflow: hidden;
+      }
+    }
+    
+  }
+}
+
+.channel-type-switch{
+
+  position: fixed;
+  z-index: 2;
+  left: -57px;
+  bottom: 58px;
+  height: 0;
+  width: 0;
+  border-left: 58px solid #f5d97b00;
+  border-top: 66px solid #f5f3f300;
+  border-bottom: 66px solid #e0dddd00;
+  border-right: 40px solid #a72efd;
+}
+.fav-icon {
+  position: fixed;
+  bottom: 107px;
+  left: 9px;
+  height: 33px;
+}
+.list-icon {
+  position: fixed;
+  bottom: 128px;
+  left: 30px;
+  height: 28px;
+}
+.clock {
+  position: absolute;
+    top: 65px;
+    right: 33px;
+    margin-right: 1px;
+    display: inline-block;
+    color: #ecececd4;
+    letter-spacing: 2px;
+    font-size: 63px;
+}
+.gamestreams-frame {
+  height: 310px;
+  width: 328px;
+  position: absolute;
+  bottom: -118px;
+  left: 756px;
+  z-index: 55;
+  opacity: 0.97;
+  transform: scaleX(-1);
+}
+.frame-animation-one {
+  position: absolute;
+  height: 30px;
+  width: 19px;
+  z-index: 54;
+  bottom: 75px;
+  left: 995px;
+  background-color: #9e5eb9;
+  animation: dropOne 3.5s infinite;
+}
+.frame-animation-two {
+  position: absolute;
+  height: 30px;
+  width: 20px;
+  bottom: 50px;
+  z-index: 50;
+  left: 1028px;
+  background-color: #9e5eb9;
+  animation: dropTwo 3s infinite
+}
+.games-menu-wrapper{
+  position: absolute;
+  z-index: 50;
+  top: 30%;
+  .game-item {
+    display: inline-block;
+    border: 10px solid rgb(0, 0, 0);
+    text-align: center;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    opacity: 0.8;
+    position: absolute;
+    background-size: cover;
+    height: 240px;
+    width: 180px;
+    .game-title {
+      position: relative;
+      line-height: 1.3;
+      left: -10px;
+      top: 240px;
+      width: 180px;
+      padding: 5px 10px;
+      text-align: center;
+      color: white;
+      background-color: black;
+      letter-spacing: 0.03em;
+    }
+    &.active {
+      border: 10px solid $color-primary;
+      opacity: 1;
+      transform: scale(1.21);
+      .game-title {
+        background-color: $color-primary;
+      }
+    }
+
+  }
+
+}
+list-name-container {
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+.list-name {
+  position: absolute;
+    z-index: 2;
+    left: 289px;
+    bottom: 36px;
+    padding-left: 30px;
+    padding-right: 20px;
+    font-size: 32px;
+    text-align: center;
+    background: #1acaff;
+    opacity: 0.8;
+    border-top-left-radius: 55px;
+}
+
+// LOADER
+.loader {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 100;
+}
+.qr-code-wrapper {
+  height: 324px;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  background-color: #4a4a4a;
+  background-image: url(https://scontent-hel2-1.xx.fbcdn.net/v/t1.0-9/21034202_267796270383856_2387…&_nc_ht=scontent-hel2-1.xx&oh=fe30e1c…&oe=5E14D001);
+  background-size: contain;
+  background-repeat: repeat-y;
+  .donation-text-placeholder 
+   img{
+    position: absolute;
+    z-index: 1;
+    height: 250px;
+    width: 250px;
+    bottom: 24px;
+    right: 29px;
+   }
+  
+}
+.loader-quart {
+  border-radius: 50px;
+  border: 6px solid rgba(167, 46, 253, 0.5);
+  &:after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    bottom: -6px;
+    left: -6px;
+    border-radius: 50px;
+    border: 6px solid transparent;
+    border-top-color: $color-primary;
+    animation: spin 1s linear infinite;
+  }
+}
+//loader animation
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
